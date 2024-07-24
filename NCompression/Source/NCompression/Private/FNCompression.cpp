@@ -2,11 +2,17 @@
 #include "FNCompression.h"
 #include "Misc/Paths.h"
 #include "HAL/FileManager.h"
-
-
-THIRD_PARTY_INCLUDES_START
-#include "ThirdParty/zlib/1.2.13/include/zlib.h"
-THIRD_PARTY_INCLUDES_END
+#include "Serialization/Archive.h"
+#include "zlib.h"
+#if PLATFORM_WINDOWS
+#include "Windows/WindowsPlatformTime.h"
+#elif PLATFORM_IOS
+#include "IOS/IOSPlatformTime.h"
+#elif PLATFORM_ANDROID
+#include "Android/AndroidPlatformTime.h"
+#elif PLATFORM_MAC
+#include "Mac/MacPlatformTime.h"
+#endif
 
 static void *zalloc(void *opaque, unsigned int size, unsigned int num)
 {
